@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Delete Account{% endblock %}
+
+{% block content %}
+<h1 style="text-align: center;">Delete Your Account</h1>
+<hr>
+<div class="delete-account">
+    <p>Are you sure you want to delete your account? Once you click the Delete Account button, your account will be deleted and will not be recovered.</p><hr>
+    <form method="POST">
+    <button style="text-align: center;" type="submit" class="btn btn-danger">Delete Account</button>
+    </form>
+</div>
+{% endblock %}

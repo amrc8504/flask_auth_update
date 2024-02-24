@@ -61,12 +61,20 @@ def edit_account():
         name = request.form.get('name')
         email = request.form.get('email')
         
+        # Check if the username already exists
+        existing_user = User.query.filter_by(user_name=name).first()
+        if existing_user and existing_user.email != email:
+            flash('Username already exists. Please choose a different one.', 'error')
+            return render_template('edit_account.html', user=current_user)
+
         # Update the user account
-        user = User.query.filter_by(email=email).first()
-        user.user_name = name
-        user.email = email
-        db.session.commit()
-        return redirect(url_for('views.account'))
+        else:
+            user = User.query.filter_by(email=email).first()
+            user.user_name = name
+            user.email = email
+            db.session.commit()
+            flash('Account updated successfully!', 'success')
+            return redirect(url_for('views.account'))
 
     return render_template('edit_account.html', user=current_user)
 
@@ -75,14 +83,22 @@ def edit_account():
 def changePassword():
     if request.method == 'POST':
         email = request.form.get('email')
-        password = request.form.get('password1')
+        cur_pass = request.form.get('current_password')
+        password = request.form.get('new_password')
         
         user = User.query.filter_by(email=email).first()
-        new_password_hash = generate_password_hash(request.form.get('password1'), method='sha256')
-        user.password1 = new_password_hash
-        db.session.commit()
-        return redirect(url_for('views.account'))
-    
+        if user:
+            if check_password_hash(user.password, cur_pass):
+                new_password_hash = generate_password_hash(password, method='sha256')
+                user.password = new_password_hash
+                db.session.commit()
+                flash('Password successfully changed!', category='success')
+                return redirect(url_for('views.account'))
+            else:
+                flash('Invalid password. Please try again.', category='error')
+        else:
+            flash('Invalid email. Please try again.', category='error')
+
     return render_template('change_password.html', user=current_user)
 
 

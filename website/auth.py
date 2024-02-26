@@ -33,8 +33,14 @@ def sign_up():
         password2 = request.form.get('password2')
 
         user = User.query.filter_by(email=email).first()
+        existing_user = User.query.filter_by(user_name=user_name).first()
+
         if user:
             flash('Looks like you already have an account.', category='error')
+        elif existing_user and existing_user.email != email:
+            flash('Username already exists. Please choose a different one.', 'error')
+        elif ' ' in password1:  # Check if password1 contains spaces
+            flash('Password cannot contain spaces.', category='error')
         elif len(email) < 4:
             flash('Email must be greater than 3 charachters.', category='error')
         elif len(user_name) < 2:
@@ -88,14 +94,25 @@ def changePassword():
         
         user = User.query.filter_by(email=email).first()
         if user:
-            if check_password_hash(user.password, cur_pass):
-                new_password_hash = generate_password_hash(password, method='sha256')
-                user.password = new_password_hash
-                db.session.commit()
-                flash('Password successfully changed!', category='success')
-                return redirect(url_for('views.account'))
+            if not password.strip():  # Check if password is blank or only contains spaces
+                flash('You cannot leave password field blank.', category='error')
+                return redirect(url_for('auth.changePassword'))
+            elif ' ' in password:  # Check if password contains spaces
+                flash('Password cannot contain spaces.', category='error')
+                return redirect(url_for('auth.changePassword'))
+            elif len(password) < 7 or len(password) > 15:
+                flash('Password must be between 7 and 15 characters.', category='error')
+            elif not cur_pass:
+                flash('Please enter your current password.', category='error')
             else:
-                flash('Invalid password. Please try again.', category='error')
+                if check_password_hash(user.password, cur_pass):
+                    new_password_hash = generate_password_hash(password, method='sha256')
+                    user.password = new_password_hash
+                    db.session.commit()
+                    flash('Password successfully changed!', category='success')
+                    return redirect(url_for('views.account'))
+                else:
+                    flash('Invalid current password. Please try again.', category='error')
         else:
             flash('Invalid email. Please try again.', category='error')
 

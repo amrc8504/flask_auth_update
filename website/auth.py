@@ -91,19 +91,20 @@ def changePassword():
         email = request.form.get('email')
         cur_pass = request.form.get('current_password')
         password = request.form.get('new_password')
+        conf_pass = request.form.get('conf_new_password')
         
         user = User.query.filter_by(email=email).first()
         if user:
             if not password.strip():  # Check if password is blank or only contains spaces
                 flash('You cannot leave password field blank.', category='error')
-                return redirect(url_for('auth.changePassword'))
             elif ' ' in password:  # Check if password contains spaces
                 flash('Password cannot contain spaces.', category='error')
-                return redirect(url_for('auth.changePassword'))
             elif len(password) < 7 or len(password) > 15:
                 flash('Password must be between 7 and 15 characters.', category='error')
             elif not cur_pass:
                 flash('Please enter your current password.', category='error')
+            elif conf_pass != password:
+                flash('Passwords do not match. Please try again.', category='error')
             else:
                 if check_password_hash(user.password, cur_pass):
                     new_password_hash = generate_password_hash(password, method='sha256')
@@ -135,5 +136,5 @@ def remove_account():
         flash('Account Deleted.', category='error')
         return redirect(url_for('auth.login'))
     else:
-        flash('Oncec your account is deleted, it cannot be undone.', category='error')
+        flash('Once your account is deleted, it cannot be undone.', category='error')
     return render_template('remove_acct.html', user=current_user)

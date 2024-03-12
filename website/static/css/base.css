@@ -1,8 +1,74 @@
-
-
+/* .navbar{
+    background-color: rgba(0, 0, 0, 0.5);
+} */
+/* .navbar-brand{
+    text-align: center;
+    margin-right: 7.5pc;
+}
+.nav-link:last-child{
+    margin-right: 10px;
+} */
+/* #navName{
+    font-size: 24px;
+    font-weight: 500;
+}
+#signUp{
+    margin-right: 41px;
+}
+#navbarNavAltMarkup{
+    height: 42px;
+} */
+body{
+    background-image: url(../media/craft1.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+}
+#edit_user{
+    width: 100%;
+}
+#change_pass{
+    width: 100%;
+}
+/* #act-details{
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+} */
+.form-bubble{
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 10px;
+    border-radius: 10px;
+}
+@media screen and (max-width: 313px) {
+    #edit_user{
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 991px){
+    .nav-link{
+        margin-right: auto;
+        margin-left: auto;
+    }
+    #edit_user{
+        margin-bottom: 10px;
+    }
+}
 @media screen and (min-width: 992px) {
     #navbarNavAltMarkup{
         display: flex;
         justify-content: flex-end;
+        height: 42px;
+    }
+    .navbar-brand{
+        text-align: center;
+    }
+    .nav-link:last-child{
+        margin-right: 20px;
+    }
+    #signUp{
+        margin-right: 41px;
+    }
+    #edit_user{
+        margin-bottom: 10px;
     }
 }

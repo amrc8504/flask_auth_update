@@ -9,10 +9,10 @@ views = Blueprint('views', __name__)
 def home():
     return render_template('home.html', user=current_user)
 
-@views.route('/Profile', methods=['GET', 'POST'])
+@views.route('/Cart', methods=['GET', 'POST'])
 @login_required
-def profile():
-    return render_template('profile.html', user=current_user)
+def cart():
+    return render_template('cart.html', user=current_user)
 
 @views.route('/Account', methods=['GET', 'POST'])
 @login_required

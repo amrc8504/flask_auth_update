@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Account{% endblock %}
 {% block content %}
-
+<div class="container">
+<br>
+<div id="act-details" class="form-bubble">
 <h1 style="text-align: center;">{{ user.user_name }}</h1><hr>
-<div class="form-bubble">
-<h3>Email: {{ user.email }}</h3>
-<h3>Name: {{ user.user_name }}</h3>
-<a class="btn btn-primary" href="{{url_for('auth.edit_account')}}">Edit Username</a>
-<a class="btn btn-primary" href="{{url_for('auth.changePassword')}}">Change Password</a>
+<h4>Email:</h4>
+<h6>{{ user.email }}</h6>
+<h4>Username:</h4>
+<h6>{{ user.user_name }}</h6>
+<a id="edit_user" class="btn btn-primary" href="{{url_for('auth.edit_account')}}">Edit Username</a>
+<a id="change_pass" class="btn btn-primary" href="{{url_for('auth.changePassword')}}">Change Password</a>
 </div>
-
+</div>
 {% endblock %}

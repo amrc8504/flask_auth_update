@@ -14,11 +14,16 @@ def create_app():
 
     from .views import views
     from .auth import auth
+    from .forsale import forsale
+    from .add_product import add_product
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(forsale, url_prefix='/')
+    app.register_blueprint(add_product, url_prefix='/')
 
     from .models import User
+    from .models import Product
 
     create_database(app)
 

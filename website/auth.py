@@ -39,12 +39,14 @@ def sign_up():
             flash('Looks like you already have an account.', category='error')
         elif existing_user and existing_user.email != email:
             flash('Username already exists. Please choose a different one.', 'error')
-        elif ' ' in password1:  # Check if password1 contains spaces
+        elif ' ' in user_name:
+            flash('Username cannot conain spaces.', category='error')
+        elif ' ' in password1:
             flash('Password cannot contain spaces.', category='error')
         elif len(email) < 4:
             flash('Email must be greater than 3 charachters.', category='error')
-        elif len(user_name) < 2:
-            flash('Username must be greater than 1 charachter.', category='error')
+        elif not user_name.strip():
+            flash('Please enter a username.', category='error')
         elif password1 != password2:
             flash('Passwords do not match.', category='error')
         elif len(password1) < 7 or len(password1) > 15:
@@ -63,17 +65,18 @@ def sign_up():
 @login_required
 def edit_account():
     if request.method == 'POST':
-        # Get the form data
         name = request.form.get('name')
         email = request.form.get('email')
-        
-        # Check if the username already exists
+
         existing_user = User.query.filter_by(user_name=name).first()
+
         if existing_user and existing_user.email != email:
             flash('Username already exists. Please choose a different one.', 'error')
             return render_template('edit_account.html', user=current_user)
-
-        # Update the user account
+        elif not name.strip():
+            flash('You have to enter a username.', category='error')
+        elif ' ' in name:
+            flash('Username cannot contain spaces.', category='error')
         else:
             user = User.query.filter_by(email=email).first()
             user.user_name = name

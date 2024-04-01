@@ -1,0 +1,58 @@
+{% extends "base.html" %} 
+{% block title %}About{% endblock %} 
+
+{% block content %}
+
+{% if user.email == 'admin@auth.com' %}
+<div class="container">
+    <br>
+    <div class="form-bubble">
+      <form method="POST" enctype="multipart/form-data">
+        <h3 align="center">Add Product</h3>
+        <div class="form-group">
+            <label for="image">Image:</label><br>
+            <input
+              type="file"
+              id="image"
+              name="image"
+            />
+          </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Product Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            name="description"
+            placeholder="Product Description"
+          />
+        </div>
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="price"
+            name="price"
+            placeholder="20"
+          />
+        </div>
+        <hr>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-success"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><path d="M480 580H372a8 8 0 0 0-8 8v48a8 8 0 0 0 8 8h108v108a8 8 0 0 0 8 8h48a8 8 0 0 0 8-8V644h108a8 8 0 0 0 8-8v-48a8 8 0 0 0-8-8H544V472a8 8 0 0 0-8-8h-48a8 8 0 0 0-8 8v108zm374.6-291.3c6 6 9.4 14.1 9.4 22.6V928c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32h424.7c8.5 0 16.7 3.4 22.7 9.4l215.2 215.3zM790.2 326L602 137.8V326h188.2z"></path></svg>Add Product</button>
+      </form>
+    </div>
+    </div>
+{% endif %}
+
+{% endblock %}

@@ -27,6 +27,7 @@
         </div>
         <hr>
         <p>Don't have an account? <a href="{{url_for('auth.sign_up')}}">Sign Up</a></p>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button type="submit" class="btn btn-success">Login</button>
       </form>
     </div>
